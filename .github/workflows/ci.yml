@@ -73,4 +73,6 @@ jobs:
     - name: Create the package
       run: dotnet pack -c Release -o ./artifacts --version-suffix=beta.$GITHUB_RUN_NUMBER
     - name: Publish the package to GPR
-      run: dotnet nuget push ./artifacts/*.nupkg -k ${{secrets.NUGET_PUSH_PAT}} -s "https://nuget.pkg.github.com/henkmollema/index.json"
+      env:
+        NUGET_PUSH_PAT: ${{ secrets.NUGET_PUSH_PAT }}
+      run: dotnet nuget push ./artifacts/*.nupkg -k $NUGET_PUSH_PAT -s "https://nuget.pkg.github.com/henkmollema/index.json"
